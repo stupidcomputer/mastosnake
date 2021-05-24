@@ -1,72 +1,79 @@
-#!/bin/python
-
 import random
 
-class Game:
-    """
-    this class describes a 5x5 grid, with a snake and
-    apple inside.
+class Snake:
+    def __init__(self, bx=5, by=5):
+        self.snake = [
+            (2, 2),
+            (2, 1),
+            (2, 0)
+        ]
+        self.gamestate = "playing"
+        self.boarddimensions = (bx, by)
+        self.directions = [
+            (-1, 0, "left"),
+            (0, -1, "down"),
+            (1, 0, "right"),
+            (0, 1, "up")
+        ]
+        self.apple = (random.randrange(0, self.boarddimensions[0]),
+            random.randrange(0, self.boarddimensions[0]))
+    def moveset(self):
+        tmp = []
+        for i, j, text in self.directions:
+            tmp.append(
+                (self.snake[0][0] + i,
+                self.snake[0][1] + j,
+                text)
+            )
 
-    coordinates are akin to a quadrant I cartesian plane, e.g.
-        ^
-       5| 
-       4|
-    y  3|
-       2|
-       1|
-        +----->
-         12345
+        for i, j, text in tmp:
+            if (i, j) == self.snake[1]:
+                tmp.remove((i, j, text))
 
-           x
-    """
-    def __init__(self):
-        self.snake = []
-        self.apple = (0, 0)
-        for i in range(3):
-            self.snake.append((3, i + 1))
-            self.snake.reverse()
-        self.newapple()
-    def newapple(self):
-        candidate = (random.randint(1, 5), random.randint(1, 5))
-        if candidate in self.snake:
-            candidate = self.newapple()
-        return candidate
-    def subtracttuple(self, a, b):
-        return (a[0] - b[0], a[1] - b[1])
-    def addtuple(self, a, b):
-        return (a[0] + b[0], a[1] + b[1])
-    def returndirections(self):
-        permute = []
-        directions = []
-        permute.append((self.snake[0][0], self.snake[0][0] + 1))
-        permute.append((self.snake[0][0], self.snake[0][0] - 1))
-        permute.append((self.snake[0][0], self.snake[0][1] + 1))
-        permute.append((self.snake[0][0], self.snake[0][1] - 1))
-        for i in permute:
-            if not i[0] < 0 and \
-                not i[0] > 5 and \
-                not i[1] < 0 and \
-                not i[1] > 5:
-                directions.append(self.subtracttuple(i, self.snake[0]))
-        return directions
-    def cycle(self, direction):
-        if direction in self.returndirections():
-            self.snake.insert(0, self.addtuple(self.snake[0], direction))
-            if not self.snake[0] == self.apple:
-                self.snake.pop(-1)
-                self.newapple()
-            if self.snake[0] in self.snake[1:]:
-                return 'game end'
-        else:
-            return 'invalid'
-    def render(self): # very inefficent, fix later
-        for y in range(5):
-            line = []
-            for x in range(5):
-                if (x + 1, y + 1) in self.snake:
-                    line.append("x")
-                elif (x + 1, y + 1) == self.apple:
-                    line.append("a")
+        for i, j, text in tmp:
+                if i < 0 or i > self.boarddimensions[0] - 1:
+                    tmp.remove((i, j, text))
+                    break
+                if j < 0 or j > self.boarddimensions[1] - 1:
+                    tmp.remove((i, j, text))
+                    break
+        return tmp
+    def nodir(self):
+        tmp = []
+        for i, j, _ in self.moveset():
+            tmp.append((i, j))
+        return tmp
+    def move(self, direction):
+        for i in self.directions:
+            if direction == i[2]:
+                considered = (self.snake[0][0] + i[0],
+                    self.snake[0][1] + i[1])
+                if considered in self.snake:
+                    self.gamestate = "gameover"
+                if considered in self.nodir():
+                    self.snake.insert(0, considered)
+                if self.apple != considered:
+                    self.snake.pop()
                 else:
-                    line.append("-")
-            print(' '.join(line))
+                    c = (random.randrange(0, self.boarddimensions[0] - 1), random.randrange(0, self.boarddimensions[1] - 1))
+                    while c in self.snake:
+                        c = (random.randrange(0, self.boarddimensions[0] - 1), random.randrange(0, self.boarddimensions[1] - 1))
+                    self.apple = c
+
+    def render(self):
+        tmp = []
+        for j in range(self.boarddimensions[0] - 1, -1, -1):
+            tmp.append([])
+            current = tmp[-1]
+            for i in range(0, self.boarddimensions[1]):
+                if (i, j) in self.snake:
+                    if (i, j) == self.snake[0]:
+                        current.append('X')
+                    else:
+                        current.append('x')
+                elif (i, j) == self.apple:
+                    current.append('a')
+                else:
+                    current.append('_')
+        return tmp
+

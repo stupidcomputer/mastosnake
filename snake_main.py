@@ -1,4 +1,4 @@
-from snake2 import Snake
+from snake import Snake
 
 snake = Snake()
 while True:

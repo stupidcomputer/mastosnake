@@ -3,7 +3,18 @@ welcome to mastosnake
 
 mastosnake is a community-driven croudsourced snake
 application, inspired by the twitter account 'Twitter Plays
-Snake'.
+Snake' written in python.
+
+behaviour
+---------
+
+every hour, roughly, mastosnake posts a poll to the given
+account configured. this poll contains the game board and
+score. the poll gives absolute directions as to how the
+snake should move its head. players vote on the direction, and
+when the hour is up, the snake moves in that particular
+direction. should there be a tie, the option that is higher on
+the list is decided.
 
 module requirements
 -------------------

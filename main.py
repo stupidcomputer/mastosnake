@@ -1,13 +1,14 @@
 import requests
 import json
 import time
+
 from mastosnake import Mastosnake as mastosnake
 from snake import Snake as snake
+from config import token
+from config import host
 
-host = 'tilde.zone/'
 postend = 'api/v1/statuses'
 getend = 'api/v1/polls/'
-token = '5mvTdpbj6lF55WRjky7IgOj-BNpH5MkBqSvaOeHLowM'
 auth = {'Authorization': 'Bearer ' + token }
 
 def main():
@@ -35,15 +36,5 @@ def main():
         time.sleep(10)
         print("posting new game status")
 
-
-#req = requests.post("https://" + host + prefix, json=params, headers=auth)
-#print(req.text)
-#print("https://" + host + prefix2 + json.loads(req.text)['id'])
-#r = requests.get("https://" + host + prefix2 + json.loads(req.text)['poll']['id'])
-#print(req.text)
-#r = requests.get("https://" + host + prefix2 + '42003')
-#print(r.text)
-#mastosnake.updateState(json.loads(r.text))
-#print(mastosnake.game.render())
-
-main()
+if __name__ == '__main__':
+    main()

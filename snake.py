@@ -50,6 +50,7 @@ class Snake:
                     self.snake[0][1] + i[1])
                 if considered in self.snake:
                     self.gamestate = "gameover"
+                    print("gameover!")
                 if considered in self.nodir():
                     self.snake.insert(0, considered)
                 if self.apple != considered:

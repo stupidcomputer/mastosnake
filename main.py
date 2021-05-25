@@ -1,3 +1,5 @@
+#!/bin/python3
+
 import requests
 import json
 import time
@@ -26,7 +28,7 @@ def main():
             mastogame = mastosnake(game)
             continue
 
-        time.sleep(120)
+        time.sleep(3600)
 
         poll_id = json.loads(r.text)['poll']['id']
         r = requests.get("https://" + host + getend + poll_id)

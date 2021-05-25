@@ -68,9 +68,14 @@ installation
 
 token = '<your access token>'
 host = '<your instance name here>/'
+dimensions = (5, 5)
 
   make sure that a forward-slash proceeds the host; otherwise
   the software will not work correctly.
+
+  for 'dimensions', it is simply the x-y measurements of the
+  board. negative numbers are not tested for, nor are
+  fractional numbers.
 
 - start up the software
 

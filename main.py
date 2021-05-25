@@ -8,13 +8,14 @@ from mastosnake import Mastosnake as mastosnake
 from snake import Snake as snake
 from config import token
 from config import host
+from config import dimensions
 
 postend = 'api/v1/statuses'
 getend = 'api/v1/polls/'
 auth = {'Authorization': 'Bearer ' + token }
 
 def main():
-    game = snake()
+    game = snake(dimensions[0], dimensions[1])
     mastogame = mastosnake(game)
     while True:
         data = mastogame.returnStatus()

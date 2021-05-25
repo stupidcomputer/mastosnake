@@ -1,0 +1,79 @@
+welcome to mastosnake
+=====================
+
+mastosnake is a community-driven croudsourced snake
+application, inspired by the twitter account 'Twitter Plays
+Snake'.
+
+module requirements
+-------------------
+
+- requests
+- json
+- time
+
+this application has been tested on python 3.9.5 (compiled
+with gcc 10.2.0).
+
+installation
+------------
+
+- make a mastodon application
+
+  with the default mastodon interface, navigate to
+  preferences > development and click 'new
+  application'.
+
+  populate the fields 'application name' and 'application
+  website' however you wish.
+
+  in the 'scopes' subheader, enable the scopes 'read' and
+  'write'. disable any other otherwise checked scopes, as
+  they are not needed.
+
+  click 'submit'.
+
+- get the access token
+
+  make sure you're still in the perferences > development
+  menu.
+
+  click on the name of the application you've just created,
+  and copy-paste the field containing 'Your access token'.
+
+  make note of this access token (in a text file, whatever)
+
+- get the instance
+
+  look at the URL in your web browser and inspect the domain.
+  usually this is the instance name.
+
+  make note of the instance name.
+
+- configure the software
+
+  in the source tree, create a file called 'config.py' and
+  populate it with the following text:
+
+token = '<your access token>'
+host = '<your instance name here>/'
+
+  make sure that a forward-slash proceeds the host; otherwise
+  the software will not work correctly.
+
+- start up the software
+
+  run main.py as 'python3 main.py', or, if your system is
+  a Unix-like, ./main.py.
+
+warnings
+--------
+
+- verify that your instance allows running bots
+- do not make your bot too spammy, this could make you get
+  banned from the instance
+
+license
+-------
+
+see LICENSE
